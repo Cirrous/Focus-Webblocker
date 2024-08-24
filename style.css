@@ -56,11 +56,23 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-  }
-  
-  li {
-    display: inline;
-  }
+}
+
+li {
+    display: flex; /* Nutzt Flexbox, um die Elemente auszurichten */
+    align-items: center; /* Zentriert den Text und das X vertikal */
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+li .remove-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+}
 
   .view {
     display: none;
@@ -68,4 +80,9 @@ ul {
 
 .view.active {
     display: block;
+}
+
+.container ul li.listElement {
+    display: block;
+    margin-bottom: 10px;
 }

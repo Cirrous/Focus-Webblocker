@@ -38,10 +38,30 @@ document.addEventListener('DOMContentLoaded', function () {
         var website = input.value.trim();
         if (website) {
             var li = document.createElement('li');
+            li.classList.add('listElement');
             li.textContent = website;
+
+            // Erstellen des "X"-Elements
+            var removeBtn = document.createElement('span');
+            removeBtn.textContent = 'X';
+            removeBtn.className = 'remove-btn';
+
+            // Hinzufügen des "X"-Elements zum Listeneintrag
+            li.appendChild(removeBtn);
+
+            // Hinzufügen des Listeneintrags zur Liste
             blocklistUl.appendChild(li);
-            saveBlocklist();
-            input.value = '';
+
+            // Event Listener für das Entfernen des Listeneintrags
+            removeBtn.addEventListener('click', function() {
+                blocklistUl.removeChild(li);
+                saveBlocklist(); // Speichern der Liste im LocalStorage
+            });
+
+            input.value = ''; // Eingabefeld zurücksetzen
+            saveBlocklist(); // Speichern der Liste im LocalStorage
+        } else {
+            alert('Please enter a valid website URL');
         }
     }
 
@@ -49,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function saveBlocklist() {
         var websites = [];
         blocklistUl.querySelectorAll('li').forEach(function (li) {
-            websites.push(li.textContent);
+            websites.push(li.textContent.replace('X', '').trim());
         });
         localStorage.setItem('blocklist', JSON.stringify(websites));
     }
@@ -59,14 +79,26 @@ document.addEventListener('DOMContentLoaded', function () {
         var websites = JSON.parse(localStorage.getItem('blocklist') || '[]');
         websites.forEach(function (website) {
             var li = document.createElement('li');
+            li.classList.add('listElement');
             li.textContent = website;
+
+            var removeBtn = document.createElement('span');
+            removeBtn.textContent = 'X';
+            removeBtn.className = 'remove-btn';
+
+            li.appendChild(removeBtn);
             blocklistUl.appendChild(li);
+
+            removeBtn.addEventListener('click', function() {
+                blocklistUl.removeChild(li);
+                saveBlocklist();
+            });
         });
     }
 
-    // Blockliste bei Seitenladezeit laden
-    loadBlocklist();
-
     // Event-Listener zum Hinzufügen von Webseiten zur Blockliste
     button.addEventListener('click', addWebsiteToBlocklist);
+
+    // Blockliste bei Seitenladezeit laden
+    loadBlocklist();
 });

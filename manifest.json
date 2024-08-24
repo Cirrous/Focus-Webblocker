@@ -4,6 +4,14 @@
     "description": "Block distracting websites like social media to help you stay focused and productive.",
     "manifest_version": 3,
     "author": "Christian Raisch",
+    "permissions": [
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+
     "action": {
         "default_popup": "index.html",
         "default_title": "Focus - Webblocker"
@@ -13,6 +21,9 @@
         "16": "icon.png",
         "48": "icon.png",
         "128": "icon.png"
-    }
+    },
 
+    "host_permissions": [
+        "*://*/*"
+    ]
 }
